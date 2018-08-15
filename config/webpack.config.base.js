@@ -53,11 +53,11 @@ module.exports =  {
             template: `html-withimg-loader!${path.resolve(__dirname, '../src/template/index.html')}`,
             filename: 'index.html'
         }),
-        // new copyWebpackPlugin([
-        //     {
-        //         from: './assets/img',
-        //         to: './assets/img'
-        //     }
-        // ])
+        new copyWebpackPlugin([
+            {
+                from: './assets/audio',
+                to: './assets/audio'
+            }
+        ])
     ]
 }
