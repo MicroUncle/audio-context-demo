@@ -1,5 +1,6 @@
 ;(function(w,d){
     const container = d.querySelector('#demo');
+    const playIcon = require('./assets/img/play.jpg')
     class Music {
         constructor(dom) {
             this.root = typeof dom === 'string' ?  d.querySelector(dom): dom;
@@ -87,8 +88,18 @@
             }
             requestAnimationFrame(update)
         }
+        ready() {
+            const imgWidth = 194;
+            const left = (this.width - imgWidth) / 2;
+            const top = (this.height - imgWidth) / 2;
+            const img = new Image();
+            img.src = playIcon;
+            img.onload = () => {
+                this.ctx.drawImage(img, 0, 0, imgWidth, imgWidth, left, top, 50, 50)
+            }
+        }
     }
-    w.test = new Music(container)
+    const demo = w.test = new Music(container)
     const audioList = [
         './assets/audio/爱啦啦.mp3',
         './assets/audio/bbc_sherlock_openning.mp3',
@@ -96,5 +107,10 @@
         './assets/audio/单曲Remix ┃ 爱上这个女声 放进专辑里私藏 夜电播音员.mp3',
     ]
     const index = Math.round(Math.random() * (audioList.length - 1));
-    w.test.playAudio(audioList[index]);
+    function start() {
+        demo.playAudio(audioList[index]);
+        demo.root.removeEventListener('click', start)
+    }
+    demo.ready()
+    demo.root.addEventListener('click', start)
 })(window,document)
